@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>CropsNH Breeding Pools Calc</title>
+    </head>
+    <body>
+        <main class="page">
+            <header class="page-header">
+            <h1 class="page-title">CropsNH<span>Breeding Pools Calc</span></h1>
+            </header>
+
+            <!-- ===== Input card ===== -->
+            <section class="card">
+            <h2 class="card-title">Breeding combination</h2>
+            <p class="card-hint">Enter the names of two plants to see what they produce in the breeding pool.</p>
+
+            <div class="field-row">
+                <div class="field">
+                <label for="plant-a">Plant A</label>
+                <input id="plant-a" list="plant-list" type="text" autocomplete="off" placeholder="e.g. Wheat">
+                </div>
+
+                <div class="cross" aria-hidden="true"></div>
+
+                <div class="field">
+                <label for="plant-b">Plant B</label>
+                <input id="plant-b" list="plant-list" type="text" autocomplete="off" placeholder="e.g. Carrot">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-primary" id="calc-btn" type="button">Calculate</button>
+                <button class="btn-ghost" id="clear-btn" type="button">Clear</button>
+            </div>
+
+            <datalist id="plant-list"></datalist>
+            </section>
+
+            <!-- ===== Result card ===== -->
+            <section class="card result-card hidden" id="result-card" aria-live="polite">
+            <h2 class="card-title">Result</h2>
+            <div id="result-body"></div>
+            </section>
+        </main>
+        <script src="scripts/script.ts"></script>
+    </body>
+</html>
