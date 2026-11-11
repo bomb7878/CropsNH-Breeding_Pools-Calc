@@ -1,5 +1,5 @@
-import { allPlants } from "./objects";
-import { Plant } from "./classes";
+import { allPlants, allPools } from "./objects.js";
+import { Plant } from "./classes.js";
 
 const plantA = document.getElementById('plant-a') as HTMLInputElement;
 const plantB = document.getElementById('plant-b') as HTMLInputElement;

@@ -1,4 +1,4 @@
-import { BreedingPool, Plant } from "./classes";
+import { BreedingPool, Plant } from "./classes.js";
 
 const Reed = new BreedingPool("Reed")
 const Wheat = new BreedingPool("Wheat")
