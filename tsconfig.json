@@ -2,8 +2,6 @@
     "compilerOptions": {
       "target": "ESNext",
       "module": "ESNext",
-      "rootDir": "./site/scripts",
-      "outDir": "./site/scripts",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,

@@ -1,5 +1,5 @@
-import { allPlants, allPools } from "./objects.js";
-import { Plant } from "./classes.js";
+import { allPlants } from "./objects.js";
+import { Plant, BreedingPool } from "./classes.js";
 
 const plantA = document.getElementById('plant-a') as HTMLInputElement;
 const plantB = document.getElementById('plant-b') as HTMLInputElement;
@@ -26,86 +26,139 @@ function escapeHtml(text: string): string {
     }[ch] || ch));
 }
 
-// The main calculation function
+interface Step {
+    from: Plant;
+    to: Plant;
+    pool: BreedingPool;
+    partners: Plant[];
+}
+
+// Recursive assembly of all paths (if there are several)
+function reconstructPaths(
+    target: Plant, 
+    parents: Map<Plant, { prev: Plant, pool: BreedingPool }[]>, 
+    start: Plant
+): Step[][] {
+    if (target === start) return [[]];
+    
+    const paths: Step[][] = [];
+    const targetParents = parents.get(target) || [];
+    
+    for (const { prev, pool } of targetParents) {
+        const prevPaths = reconstructPaths(prev, parents, start);
+        for (const p of prevPaths) {
+            // We are collecting partners: all plants from the pool, except for the current and target ones
+            const partners = pool.plants_list.filter(plant => plant !== prev && plant !== target);
+            paths.push([...p, { from: prev, to: target, pool, partners }]);
+        }
+    }
+    return paths;
+}
+
+// Main function (BFS - breadth-first search)
 function calculate() {
     const nameA = plantA.value.trim();
     const nameB = plantB.value.trim();
 
     resultCard.classList.remove('hidden');
 
-    // Checking for empty fields
     if (!nameA || !nameB) {
         resultBody.innerHTML = `<div class="result-empty">Пожалуйста, введите названия обоих растений.</div>`;
         return;
     }
 
-    const firstPlant = findPlantByName(nameA);
-    const secondPlant = findPlantByName(nameB);
+    const startPlant = findPlantByName(nameA);
+    const targetPlant = findPlantByName(nameB);
 
-    // Verification of existence
-    if (!firstPlant || !secondPlant) {
-        const missing = !firstPlant ? nameA : nameB;
+    if (!startPlant || !targetPlant) {
+        const missing = !startPlant ? nameA : nameB;
         resultBody.innerHTML = `<div class="result-empty">Растение «${escapeHtml(missing)}» не найдено в базе.</div>`;
         return;
     }
 
-    // If a plant does not have pools, it does not participate in pool breeding.
-    if (firstPlant.pools.length === 0 || secondPlant.pools.length === 0) {
-        const noPoolsPlant = firstPlant.pools.length === 0 ? firstPlant : secondPlant;
-        resultBody.innerHTML = `<div class="result-empty">Растение «${escapeHtml(noPoolsPlant.name)}» не принадлежит ни одному пулу и не может использоваться для pool breeding.</div>`;
+    if (startPlant === targetPlant) {
+        resultBody.innerHTML = `<div class="result-empty">Это одно и то же растение.</div>`;
         return;
     }
 
-    // Finding common pools
-    const sharedPools = firstPlant.pools.filter(pool => secondPlant.pools.includes(pool));
+    // === BFS Algorithm ===
+    const queue: Plant[] = [startPlant];
+    const dist = new Map<Plant, number>();
+    const parents = new Map<Plant, { prev: Plant, pool: BreedingPool }[]>();
+    
+    dist.set(startPlant, 0);
+    let found = false;
 
-    if (sharedPools.length === 0) {
-        resultBody.innerHTML = `<div class="result-empty">У «${escapeHtml(firstPlant.name)}» и «${escapeHtml(secondPlant.name)}» нет общих пулов.</div>`;
+    while (queue.length > 0) {
+        const u = queue.shift()!;
+        const d = dist.get(u)!;
+
+        if (u === targetPlant) {
+            found = true;
+            break; // Have you found the shortest way to the goal
+        }
+
+        // We go through all the pools of the current plant
+        for (const pool of u.pools) {
+            // We are trying to get every plant from this pool.
+            for (const v of pool.plants_list) {
+                if (v === u) continue;
+
+                if (!dist.has(v)) {
+                    dist.set(v, d + 1);
+                    parents.set(v, [{ prev: u, pool }]);
+                    queue.push(v);
+                } else if (dist.get(v) === d + 1) {
+                    // If we find another path of the same length, we add it as an alternative.
+                    parents.get(v)!.push({ prev: u, pool });
+                }
+            }
+        }
+    }
+
+    // === RENDERING THE RESULT ===
+    if (!found) {
+        resultBody.innerHTML = `<div class="result-empty">Невозможно получить «${escapeHtml(targetPlant.name)}» из «${escapeHtml(startPlant.name)}» через пулы.</div>`;
         return;
     }
 
-    // We collect all possible descendants and their probabilities
-    const offspringMap = new Map<Plant, number>();
-    const poolCount = sharedPools.length;
+    const allPaths = reconstructPaths(targetPlant, parents, startPlant);
+    
+    const pathsToShow = allPaths.slice(0, 3); 
 
-    sharedPools.forEach(pool => {
-        const plantsInPool = pool.plants_list;
-        const probPerPlant = 1 / (poolCount * plantsInPool.length);
-        plantsInPool.forEach(plant => {
-            const current = offspringMap.get(plant) || 0;
-            offspringMap.set(plant, current + probPerPlant);
+    let html = `<h3 style="margin-top: 0; color: var(--accent);">Найдено путей: ${allPaths.length}</h3>`;
+    
+    pathsToShow.forEach((path, pathIndex) => {
+        if (allPaths.length > 1) {
+            html += `<h4 style="margin: 20px 0 10px; color: var(--text-muted);">Вариант ${pathIndex + 1}</h4>`;
+        }
+        
+        html += `<div class="path-container">`;
+        
+        path.forEach((step, idx) => {
+            html += `
+                <div class="step-card">
+                    <div class="step-header">Шаг ${idx + 1}</div>
+                    <div class="step-body">
+                        <p>Возьмите <span class="chip">${escapeHtml(step.from.name)}</span> и скрестите с любым растением из пула <span class="chip pool">${escapeHtml(step.pool.name)}</span>:</p>
+                        <div class="partners-list">
+                            ${step.partners.length > 0 
+                                ? step.partners.map(p => `<span class="chip-small">${escapeHtml(p.name)}</span>`).join('')
+                                : '<span class="chip-small" style="color: var(--text-muted)">Любое другое растение из этого пула</span>'}
+                        </div>
+                        <p class="arrow-down">↓</p>
+                        <p>Чтобы получить <span class="chip out">${escapeHtml(step.to.name)}</span></p>
+                    </div>
+                </div>
+            `;
         });
+        html += `</div>`;
     });
 
-    // We sort the probability in descending order
-    const sortedOffspring = Array.from(offspringMap.entries())
-        .sort((a, b) => b[1] - a[1]);
+    if (allPaths.length > 3) {
+        html += `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 15px;">...и еще ${allPaths.length - 3} путей такой же длины.</p>`;
+    }
 
-    // Creating HTML
-    let html = `
-        <div class="result-flow">
-            <span class="chip">${escapeHtml(firstPlant.name)}</span>
-            <span class="arrow">✕</span>
-            <span class="chip">${escapeHtml(secondPlant.name)}</span>
-            <span class="arrow">→</span>
-            <span class="chip out">Общие пулы</span>
-        </div>
-        <div class="result-meta">
-            <span class="meta-item">Общие пулы: <b>${sharedPools.map(p => escapeHtml(p.name)).join(', ')}</b></span>
-        </div>
-        <h3 style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">Возможные потомки:</h3>
-        <ul style="list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 8px;">
-    `;
-
-    sortedOffspring.forEach(([plant, prob]) => {
-        const percentage = (prob * 100).toFixed(1);
-        html += `<li class="chip" style="display: inline-flex; align-items: center; gap: 8px;">
-            ${escapeHtml(plant.name)}
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">${percentage}%</span>
-        </li>`;
-    });
-
-    html += `</ul>`;
     resultBody.innerHTML = html;
 }
 
