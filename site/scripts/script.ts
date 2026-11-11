@@ -136,18 +136,30 @@ function calculate() {
         html += `<div class="path-container">`;
         
         path.forEach((step, idx) => {
+            // Генерируем красивые теги для растений
+            const partnerTags = step.partners.length > 0 
+                ? step.partners.map(p => `<span class="partner-tag">${escapeHtml(p.name)}</span>`).join('')
+                : '<span class="partner-tag" style="color: var(--text-muted)">Любое другое из пула</span>';
+
             html += `
                 <div class="step-card">
                     <div class="step-header">Шаг ${idx + 1}</div>
                     <div class="step-body">
                         <p>Возьмите <span class="chip">${escapeHtml(step.from.name)}</span> и скрестите с любым растением из пула <span class="chip pool">${escapeHtml(step.pool.name)}</span>:</p>
+                        
                         <div class="partners-list">
-                            ${step.partners.length > 0 
-                                ? step.partners.map(p => `<span class="chip-small">${escapeHtml(p.name)}</span>`).join('')
-                                : '<span class="chip-small" style="color: var(--text-muted)">Любое другое растение из этого пула</span>'}
+                            ${partnerTags}
                         </div>
-                        <p class="arrow-down">↓</p>
-                        <p>Чтобы получить <span class="chip out">${escapeHtml(step.to.name)}</span></p>
+                        
+                        <!-- Красивая SVG-стрелочка -->
+                        <div class="arrow-down">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <polyline points="19 12 12 19 5 12"></polyline>
+                            </svg>
+                        </div>
+                        
+                        <p style="text-align: center;">Чтобы получить <span class="chip out">${escapeHtml(step.to.name)}</span></p>
                     </div>
                 </div>
             `;
