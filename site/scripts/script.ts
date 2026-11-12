@@ -12,13 +12,16 @@ const datalist = document.getElementById('plant-list') as HTMLDataListElement;
 
 allPlants.forEach(plant => {
     const option = document.createElement('option');
-    option.value = plant.name;
+    option.value = plant.getName();
     datalist.appendChild(option);
 });
 
 function findPlantByName(name: string): Plant | undefined {
     const lower = name.trim().toLowerCase();
-    return allPlants.find(p => p.name.toLowerCase() === lower);
+    return allPlants.find(p => 
+        p.getName().toLowerCase() === lower || 
+        p.name.toLowerCase() === lower
+    );
 }
 
 function escapeHtml(text: string): string {
