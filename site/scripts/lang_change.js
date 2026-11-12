@@ -3,10 +3,26 @@ const translations = {
     en: {
         navProfile: "Profile",
         navSource: "Source Code",
+        projectName: "Breeding Pools Calc",
+        inputDescriptionName: "Breeding Pathfinder",
+        inputDescription: "Enter two plants to calculate a step-by-step chain using their shared breeding pools.",
+        plant1: "Start Plant",
+        plant2: "Final Plant",
+        calc_btn: "Calculate",
+        clear_btn: "Clear",
+        resultTitle: "Result",
     },
     ru: {
         navProfile: "Профиль",
         navSource: "Исходный код",
+        projectName: "Калькулятор Групп Селекции",
+        inputDescriptionName: "Поиск пути скрещивания",
+        inputDescription: "Введите два растения, чтобы получить пошаговую цепочку скрещиваний через их общие селекционные группы.",
+        plant1: "Начальное растение",
+        plant2: "Итоговое растение",
+        calc_btn: "Расчитать",
+        clear_btn: "Очистить",
+        resultTitle: "Результат",
     }
 };
 
