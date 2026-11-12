@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "ESNext",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "allowJs": true,
-      "checkJs": false,
-      "outDir": "./dist"
-    },
-    "include": ["site/scripts/**/*.ts", "site/scripts/**/*.js"]
-  }
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "./site/scripts",
+    "outDir": "./site/scripts"
+  },
+  "include": ["site/scripts/**/*.ts"],
+  "exclude": ["node_modules"]
+}

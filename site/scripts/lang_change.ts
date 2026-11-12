@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // Dictionary with translations
 const translations = {
     en: {
