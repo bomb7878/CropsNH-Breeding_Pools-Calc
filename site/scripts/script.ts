@@ -199,18 +199,28 @@ clearBtn.addEventListener('click', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('site_language') || 'ru';
+    const savedLang = localStorage.getItem('site_language') || 'en';
     setLanguage(savedLang);
 
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
         langBtn.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('site_language') || 'ru';
+            const currentLang = localStorage.getItem('site_language') || 'en';
             const newLang = currentLang === 'ru' ? 'en' : 'ru';
             setLanguage(newLang);
 
             if (typeof calculate === 'function') {
-                calculate();
+                const el = document.getElementById('result-body') as HTMLBodyElement;
+
+                if (el.childNodes.length === 0) {
+                    const observer = new MutationObserver(() => {
+                    if (el.childNodes.length > 0) {
+                        observer.disconnect();
+                        calculate();
+                    }
+                });
+                    observer.observe(el, { childList: true, subtree: true });
+                }
             }
         });
     }
