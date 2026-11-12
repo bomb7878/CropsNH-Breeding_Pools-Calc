@@ -1,6 +1,6 @@
 import { allPlants } from "./objects.js";
 import { Plant, BreedingPool } from "./classes.js";
-import { t } from "./lang_change.js"
+import { t, setLanguage } from "./lang_change.js"
 
 const plantA = document.getElementById('plant-a') as HTMLInputElement;
 const plantB = document.getElementById('plant-b') as HTMLInputElement;
@@ -153,7 +153,7 @@ function calculate() {
                 <div class="step-card">
                     <div class="step-header">${t('stepCounter', { step: idx + 1 })}</div>
                     <div class="step-body">
-                        <p>${t('breedingRecipe', { plantName: escapeHtml(step.from.getName()), poolName: escapeHtml(step.pool.getName()) })}</p>
+                        <p>${t('breedingRecipe', { plantName: escapeHtml(step.from.getName()), poolName: escapeHtml(step.pool.getName()) })}:</p>
                         
                         <div class="partners-list">
                             ${partnerTags}
@@ -195,4 +195,23 @@ clearBtn.addEventListener('click', () => {
     resultCard.classList.add('hidden');
     resultBody.innerHTML = '';
     plantA.focus();
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('site_language') || 'ru';
+    setLanguage(savedLang);
+
+    const langBtn = document.getElementById('lang-toggle');
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            const currentLang = localStorage.getItem('site_language') || 'ru';
+            const newLang = currentLang === 'ru' ? 'en' : 'ru';
+            setLanguage(newLang);
+
+            if (typeof calculate === 'function') {
+                calculate();
+            }
+        });
+    }
 });

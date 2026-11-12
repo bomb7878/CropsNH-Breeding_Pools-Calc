@@ -240,14 +240,14 @@
     margin: 10px 0;
     color: var(--accent); 
     user-select: none;
-}
+  }
 
-.cross svg {
-    width: 28px;
-    height: 28px;
-    filter: drop-shadow(0 0 8px rgba(90, 169, 230, 0.6));
-    animation: float 2s ease-in-out infinite;
-}
+  .cross svg {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 8px rgba(90, 169, 230, 0.6));
+      animation: float 2s ease-in-out infinite;
+  }
 
   /* ---------- Buttons ---------- */
   .actions {
@@ -309,12 +309,11 @@
   }
 
   .chip {
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    font-weight: 600;
-    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 2px 4px;
+    padding: 4px 12px;
+    font-size: 0.9rem;
   }
 
   .chip.out {
@@ -365,50 +364,43 @@
     color: var(--text-muted);
   }
 
-  /* ---------- Mobile ---------- */
-  @media (max-width: 560px) {
-    .field-row {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .cross {
-      padding: 0;
-      text-align: center;
-      transform: rotate(90deg);
-    }
-    .custom-navbar { padding: 10px 16px; }
-    .github-link .nav-text { display: none; }
-    .github-link { padding: 8px; }
-    .repo-link { padding: 6px 10px; font-size: 0.8rem; }
-  }
-
   /* === Styles for the pool tree === */
   .partners-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 15px 0;
+    margin: 16px 0;
     padding: 16px;
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px dashed var(--border);
   }
 
   .partner-tag {
-      display: inline-block;
+      display: inline-flex;
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 5px 12px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-size: 0.85rem;
       color: var(--text);
       transition: all 0.2s ease;
+      align-items: center;
   }
 
   .partner-tag:hover {
       border-color: var(--accent);
       background: var(--accent-soft);
       color: #fff;
+  }
+
+  .step-body {
+    word-wrap: break-word;
+  }
+
+  .step-body p {
+    line-height: 1.8;
+    margin-bottom: 12px;
   }
 
   .arrow-down {
@@ -429,4 +421,21 @@
   @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(5px); }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 560px) {
+    .field-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .cross {
+      padding: 0;
+      text-align: center;
+      transform: rotate(90deg);
+    }
+    .custom-navbar { padding: 10px 16px; }
+    .github-link .nav-text { display: none; }
+    .github-link { padding: 8px; }
+    .repo-link { padding: 6px 10px; font-size: 0.8rem; }
   }

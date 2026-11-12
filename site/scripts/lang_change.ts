@@ -25,7 +25,7 @@ const translations = {
         variant: "Way {var}",
         anyOtherPool: "Any other from the pool",
         stepCounter: "Step {step}",
-        breedingRecipe: 'Take <span class="chip">{plantName}</span> and breed with any plant from the pool <span class="chip pool">{poolName}</span>:',
+        breedingRecipe: 'Take <span class="chip">{plantName}</span> and breed with any plant from the pool <span class="chip pool">{poolName}</span>',
         toGetPlant: 'To get <span class="chip out">{plantName}</span>',
         andSimilarWays: "...and {ways} more ways of the same length.",
     },
@@ -52,7 +52,7 @@ const translations = {
         variant: "Способ {var}",
         anyOtherPool: "Любое другое из пула селекции",
         stepCounter: "Шаг {step}",
-        breedingRecipe: 'Возьмите <span class="chip">{plantName}</span> и скрестите с любым растением из пула селекции <span class="chip pool">{poolName}</span>:',
+        breedingRecipe: 'Возьмите <span class="chip">{plantName}</span> и скрестите с любым растением из пула селекции <span class="chip pool">{poolName}</span>',
         toGetPlant: 'Чтобы получить <span class="chip out">{plantName}</span>',
         andSimilarWays: "...и еще {ways} путей такой же длины.",
     }
@@ -72,7 +72,7 @@ export function t(key, params = {}) {
 }
 
 // Function for language application
-function setLanguage(lang) {
+export function setLanguage(lang) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -103,17 +103,3 @@ function setLanguage(lang) {
 
     localStorage.setItem('site_language', lang);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('site_language') || 'ru';
-    setLanguage(savedLang);
-
-    const langBtn = document.getElementById('lang-toggle');
-    if (langBtn) {
-        langBtn.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('site_language') || 'ru';
-            const newLang = currentLang === 'ru' ? 'en' : 'ru';
-            setLanguage(newLang);
-        });
-    }
-});
