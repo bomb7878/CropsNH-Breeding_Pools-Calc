@@ -1,5 +1,6 @@
 import { allPlants } from "./objects.js";
 import { Plant, BreedingPool } from "./classes.js";
+import { t } from "./lang_change.js"
 
 const plantA = document.getElementById('plant-a') as HTMLInputElement;
 const plantB = document.getElementById('plant-b') as HTMLInputElement;
@@ -63,7 +64,7 @@ function calculate() {
     resultCard.classList.remove('hidden');
 
     if (!nameA || !nameB) {
-        resultBody.innerHTML = `<div class="result-empty">Пожалуйста, введите названия обоих растений.</div>`;
+        resultBody.innerHTML = `<div class="result-empty">${t('errBothPlants')}</div>`;
         return;
     }
 
@@ -72,12 +73,12 @@ function calculate() {
 
     if (!startPlant || !targetPlant) {
         const missing = !startPlant ? nameA : nameB;
-        resultBody.innerHTML = `<div class="result-empty">Растение «${escapeHtml(missing)}» не найдено в базе.</div>`;
+        resultBody.innerHTML = `<div class="result-empty">${t('errNotFound', { plant: escapeHtml(missing) })}</div>`;
         return;
     }
 
     if (startPlant === targetPlant) {
-        resultBody.innerHTML = `<div class="result-empty">Это одно и то же растение.</div>`;
+        resultBody.innerHTML = `<div class="result-empty">${t('errSamePlant')}</div>`;
         return;
     }
 
@@ -118,7 +119,12 @@ function calculate() {
 
     // === RENDERING THE RESULT ===
     if (!found) {
-        resultBody.innerHTML = `<div class="result-empty">Невозможно получить «${escapeHtml(targetPlant.name)}» из «${escapeHtml(startPlant.name)}» через пулы.</div>`;
+        resultBody.innerHTML = resultBody.innerHTML = `<div class="result-empty">${
+            t('errorImpossiblePath', { 
+                target: escapeHtml(targetPlant.name), 
+                start: escapeHtml(startPlant.name) 
+            })
+        }</div>`;
         return;
     }
 
@@ -126,32 +132,30 @@ function calculate() {
     
     const pathsToShow = allPaths.slice(0, 3); 
 
-    let html = `<h3 style="margin-top: 0; color: var(--accent);">Найдено путей: ${allPaths.length}</h3>`;
+    let html = `<h3 style="margin-top: 0; color: var(--accent);">${t('pathsFound', { paths: allPaths.length })}</h3>`;
     
     pathsToShow.forEach((path, pathIndex) => {
         if (allPaths.length > 1) {
-            html += `<h4 style="margin: 20px 0 10px; color: var(--text-muted);">Вариант ${pathIndex + 1}</h4>`;
+            html += `<h4 style="margin: 20px 0 10px; color: var(--text-muted);">${t('variant', { var: pathIndex + 1 })}</h4>`;
         }
         
         html += `<div class="path-container">`;
         
         path.forEach((step, idx) => {
-            // Генерируем красивые теги для растений
-            const partnerTags = step.partners.length > 0 
-                ? step.partners.map(p => `<span class="partner-tag">${escapeHtml(p.name)}</span>`).join('')
-                : '<span class="partner-tag" style="color: var(--text-muted)">Любое другое из пула</span>';
+            const partnerTags = step.partners.length > 0 ? 
+            step.partners.map(p => `<span class="partner-tag">${escapeHtml(p.getName())}</span>`).join('')
+            : `<span class="partner-tag" style="color: var(--text-muted)">${t('anyOtherPool')}</span>`;
 
             html += `
                 <div class="step-card">
-                    <div class="step-header">Шаг ${idx + 1}</div>
+                    <div class="step-header">${t('stepCounter', { step: idx + 1 })}</div>
                     <div class="step-body">
-                        <p>Возьмите <span class="chip">${escapeHtml(step.from.name)}</span> и скрестите с любым растением из пула <span class="chip pool">${escapeHtml(step.pool.name)}</span>:</p>
+                        <p>${t('breedingRecipe', { plantName: escapeHtml(step.from.getName()), poolName: escapeHtml(step.pool.getName()) })}</p>
                         
                         <div class="partners-list">
                             ${partnerTags}
                         </div>
                         
-                        <!-- Красивая SVG-стрелочка -->
                         <div class="arrow-down">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -159,7 +163,7 @@ function calculate() {
                             </svg>
                         </div>
                         
-                        <p style="text-align: center;">Чтобы получить <span class="chip out">${escapeHtml(step.to.name)}</span></p>
+                        <p style="text-align: center;">${t('toGetPlant', { plantName: step.to.getName() })}</p>
                     </div>
                 </div>
             `;
@@ -168,7 +172,7 @@ function calculate() {
     });
 
     if (allPaths.length > 3) {
-        html += `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 15px;">...и еще ${allPaths.length - 3} путей такой же длины.</p>`;
+        html += `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 15px;">${t('andSimilarWays', { ways: allPaths.length - 3 })}</p>`;
     }
 
     resultBody.innerHTML = html;

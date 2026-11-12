@@ -5,7 +5,10 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "allowJs": true,
+      "checkJs": false,
+      "outDir": "./dist"
     },
-    "include": ["site/scripts/**/*.ts"]
+    "include": ["site/scripts/**/*.ts", "site/scripts/**/*.js"]
   }
