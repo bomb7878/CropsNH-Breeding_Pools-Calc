@@ -5,9 +5,12 @@ const translations = {
     en: {
         navProfile: "Profile",
         navSource: "Source Code",
+
         projectName: "Breeding Pools Calc",
         inputDescriptionName: "Breeding Pathfinder",
+
         inputDescription: "Enter two plants to calculate a step-by-step chain using their shared breeding pools.",
+        translationInaccuracy: "Please note that the names of the seeds may not match those in the game because I did the translation myself and could have made a mistake.",
         plant1: "Start Plant",
         plant1Placeholder: "e.g. Coppon",
         plant2: "Final Plant",
@@ -32,9 +35,12 @@ const translations = {
     ru: {
         navProfile: "Профиль",
         navSource: "Исходный код",
+
         projectName: "Калькулятор Групп Селекции",
         inputDescriptionName: "Поиск пути скрещивания",
+
         inputDescription: "Введите два растения, чтобы получить пошаговую цепочку скрещиваний через их общие пулы селекции.",
+        translationInaccuracy: "Учтите, что названия семян могут не совпадать с теми, что в игре т.к. я делал перевод самостоятельно и мог ошибиться",
         plant1: "Начальное растение",
         plant1Placeholder: "напр. Медный хлопок",
         plant2: "Итоговое растение",
