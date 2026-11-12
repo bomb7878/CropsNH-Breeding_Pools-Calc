@@ -1,18 +1,21 @@
-# Зависимости
+# Dependencies
 node_modules/
 package-lock.json
 
-# Окружение и настройки редактора
+# The environment and settings of the editor
 .vscode/
 .idea/
 *.swp
 
-# Скомпилированные файлы
+# Compiled files
 site/scripts/*.js
 
-# Системные файлы
+# But we leave the logic of changing the language.
+!site/scripts/lang_change.js
+
+# System files
 .DS_Store
 Thumbs.db
 
-# Документация
+# Documentation
 docs/

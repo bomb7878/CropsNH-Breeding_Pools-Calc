@@ -63,14 +63,12 @@
       color: var(--accent) !important;
   }
 
-  /* --- Обертка для ссылок --- */
   .nav-links-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px; /* Расстояние между кнопками */
+      gap: 12px;
   }
 
-  /* --- Кнопка Профиля (с иконкой) --- */
   .github-link {
       display: inline-flex;
       align-items: center;
@@ -97,25 +95,42 @@
       transform: scale(1.15) rotate(-5deg);
   }
 
-/* --- Кнопка Репозитория (Исходный код) --- */
-.repo-link {
-    display: inline-flex;
-    align-items: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 20px; /* Форма таблетки */
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
+  .repo-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+  }
 
-.repo-link:hover {
-    color: var(--text);
-    border-color: var(--text-muted);
-    background-color: rgba(255, 255, 255, 0.05);
-}
+  .repo-link:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+      background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .lang-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .lang-btn:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+      background-color: rgba(255, 255, 255, 0.05);
+  }
 
   /* ---------- Layout ---------- */
   .page {
