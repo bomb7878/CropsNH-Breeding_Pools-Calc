@@ -122,10 +122,10 @@ function calculate() {
 
     // === RENDERING THE RESULT ===
     if (!found) {
-        resultBody.innerHTML = resultBody.innerHTML = `<div class="result-empty">${
+        resultBody.innerHTML = `<div class="result-empty">${
             t('errorImpossiblePath', { 
-                target: escapeHtml(targetPlant.name), 
-                start: escapeHtml(startPlant.name) 
+                target: escapeHtml(targetPlant.getName()),
+                start: escapeHtml(startPlant.getName())
             })
         }</div>`;
         return;
