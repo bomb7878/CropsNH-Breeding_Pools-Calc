@@ -23,7 +23,7 @@ CROPSNH-BREEDING-POOLS-CALC/
 │   │   ├── classes.ts      # BreedingPool and Plant classes
 │   │   ├── objects.ts      # Initialization of all pools and plants
 │   │   |── script.ts       # DOM-logic and algorithm of crossing
-|── index.html              # Home page
+├── index.html              # Home page
 │ └── styles.css            # Styles
 ├── package.json            # npm Configuration
-|── README.md               # This file
+├── README.md               # This file
