@@ -311,9 +311,10 @@
   .chip {
     display: inline-block;
     vertical-align: middle;
-    margin: 2px 4px;
+    margin: 0 2px;
     padding: 4px 12px;
     font-size: 0.9rem;
+    white-space: nowrap;
   }
 
   .chip.out {
@@ -399,7 +400,7 @@
   }
 
   .step-body p {
-    line-height: 1.8;
+    line-height: 1.5;
     margin-bottom: 12px;
   }
 

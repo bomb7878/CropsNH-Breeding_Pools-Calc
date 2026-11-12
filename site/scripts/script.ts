@@ -217,16 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDatalist();
 
             if (typeof calculate === 'function') {
-                const el = document.getElementById('result-body') as HTMLBodyElement;
-
-                if (el.childNodes.length === 0) {
-                    const observer = new MutationObserver(() => {
-                    if (el.childNodes.length > 0) {
-                        observer.disconnect();
-                        calculate();
-                    }
-                });
-                    observer.observe(el, { childList: true, subtree: true });
+                const el = document.getElementById('result-body');
+                if (el && el.innerHTML.trim() !== '') {
+                    calculate();
                 }
             }
         });
