@@ -25,7 +25,8 @@ function findPlantByName(name: string): Plant | undefined {
     const lower = name.trim().toLowerCase();
     return allPlants.find(p => 
         p.getName().toLowerCase() === lower || 
-        p.name.toLowerCase() === lower
+        p.name.toLowerCase() === lower ||
+        p.ru_name.toLowerCase() === lower
     );
 }
 
