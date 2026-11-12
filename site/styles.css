@@ -361,6 +361,10 @@
       text-align: center;
       transform: rotate(90deg);
     }
+    .custom-navbar { padding: 10px 16px; }
+    .github-link .nav-text { display: none; }
+    .github-link { padding: 8px; }
+    .repo-link { padding: 6px 10px; font-size: 0.8rem; }
   }
 
   /* === Styles for the pool tree === */
