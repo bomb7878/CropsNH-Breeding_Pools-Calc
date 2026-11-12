@@ -29,20 +29,23 @@ function setLanguage(lang) {
     document.documentElement.lang = lang;
 
     const langBtn = document.getElementById('lang-toggle');
-    langBtn.textContent = lang === 'en' ? 'RU' : 'EN';
+    if (langBtn) {
+        langBtn.textContent = lang.toUpperCase();
+    }
 
     localStorage.setItem('site_language', lang);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('site_language') || 'ru';
-    
     setLanguage(savedLang);
 
     const langBtn = document.getElementById('lang-toggle');
-    langBtn.addEventListener('click', () => {
-        const currentLang = localStorage.getItem('site_language') || 'ru';
-        const newLang = currentLang === 'ru' ? 'en' : 'ru';
-        setLanguage(newLang);
-    });
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            const currentLang = localStorage.getItem('site_language') || 'ru';
+            const newLang = currentLang === 'ru' ? 'en' : 'ru';
+            setLanguage(newLang);
+        });
+    }
 });
