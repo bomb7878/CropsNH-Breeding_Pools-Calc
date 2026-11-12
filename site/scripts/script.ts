@@ -10,11 +10,16 @@ const resultCard = document.getElementById('result-card') as HTMLElement;
 const resultBody = document.getElementById('result-body') as HTMLElement;
 const datalist = document.getElementById('plant-list') as HTMLDataListElement;
 
-allPlants.forEach(plant => {
-    const option = document.createElement('option');
-    option.value = plant.getName();
-    datalist.appendChild(option);
-});
+function updateDatalist() {
+    datalist.innerHTML = '';
+    allPlants.forEach(plant => {
+        const option = document.createElement('option');
+        option.value = plant.getName();
+        datalist.appendChild(option);
+    });
+}
+
+updateDatalist();
 
 function findPlantByName(name: string): Plant | undefined {
     const lower = name.trim().toLowerCase();
@@ -197,7 +202,6 @@ clearBtn.addEventListener('click', () => {
     plantA.focus();
 });
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('site_language') || 'en';
     setLanguage(savedLang);
@@ -208,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentLang = localStorage.getItem('site_language') || 'en';
             const newLang = currentLang === 'ru' ? 'en' : 'ru';
             setLanguage(newLang);
+
+            updateDatalist();
 
             if (typeof calculate === 'function') {
                 const el = document.getElementById('result-body') as HTMLBodyElement;
