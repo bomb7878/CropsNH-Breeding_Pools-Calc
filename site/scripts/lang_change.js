@@ -38,7 +38,7 @@ const translations = {
         plant2: "Итоговое растение",
         plant2Placeholder: "напр. Какао",
 
-        calc_btn: "Расчитать",
+        calc_btn: "Рассчитать",
         clear_btn: "Очистить",
 
         resultTitle: "Результат",
