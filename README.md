@@ -1,29 +1,29 @@
 # CropsNH Breeding Pools Calc
 
-Веб-калькулятор для расчета скрещивания растений в моде **CropsNH** (сборка GregTech: New Horizons). 
-Позволяет быстро узнать, какие растения можно получить при скрещивании двух родителей через общие пулы (Breeding Pools).
+A web calculator for calculating the crossing of plants in fashion **CropsNH** (assembly of GregTech: New Horizons). 
+It allows you to quickly find out which plants can be obtained by crossing two parents through common Breeding Pools.
 
-## 🚀 Возможности
-- Ввод названий двух растений с автодополнением (Datalist).
-- Проверка наличия общих пулов у выбранных растений.
-- Расчет вероятностей получения каждого возможного потомка (с учетом случайного выбора пула и растения внутри пула).
-- Поддержка всех растений и пулов из актуальной версии CropsNH (включая базовые, Twilight Forest, Thaumcraft, Witchery и др.).
-- Удобный и минималистичный интерфейс без лишних панелей.
+## 🚀 Features
+- Enter the names of two plants with auto-completion (Datalist).
+- Checking the availability of common pools for selected plants.
+- Calculation of the probabilities of obtaining each possible descendant (taking into account the random selection of the pool and the plant within the pool).
+- Support for all plants and pools from the current version of CropsNH (including basic, Twilight Forest, Thaumcraft, Witchery, etc.).
+- User-friendly and minimalistic interface without unnecessary panels.
 
-## 🛠 Технологии
-- **HTML5 / CSS3** — интерфейс (одностраничное приложение, карточный дизайн).
-- **TypeScript** — логика работы калькулятора и структуры данных.
-- **Node.js / npm** — для установки TypeScript и сборки.
+## 🛠 Technologies
+- **HTML5 / CSS3** — interface (single-page application, card design).
+- **TypeScript** — the logic of the calculator and data structures.
+- **Node.js / npm** — for TypeScript installation and assembly.
 
-## 📁 Структура проекта
+## 📁 Project structure
 ```text
 CROPSNH-BREEDING-POOLS-CALC/
-├── site/                  # Исходный код веб-приложения
-│   ├── scripts/           # Логика на TypeScript
-│   │   ├── classes.ts     # Классы BreedingPool и Plant
-│   │   ├── objects.ts     # Инициализация всех пулов и растений
-│   │   └── script.ts      # DOM-логика и алгоритм скрещивания
-│   ├── index.html         # Главная страница
-│   └── styles.css         # Стили
-├── package.json           # Конфигурация npm
-└── README.md              # Этот файл
+├── site/                   # Web Application source code
+│   ├── scripts/            # Logic in TypeScript
+│   │   ├── classes.ts      # BreedingPool and Plant classes
+│   │   ├── objects.ts      # Initialization of all pools and plants
+│   │   |── script.ts       # DOM-logic and algorithm of crossing
+|── index.html              # Home page
+│ └── styles.css            # Styles
+├── package.json            # npm Configuration
+|── README.md               # This file
